@@ -65,6 +65,30 @@ class Comments {
         const url = `${this.url}/${commentId}`;
         return fetch(url, options).then((response) => response.json());
     }
+
+    getCommentsForPost(postId) {
+        const url1 = `https://jsonplaceholder.typicode.com/posts/${postId}/comments`;
+        const queryParams = new URLSearchParams({
+            postId: postId
+        });
+        const url = `${this.url}?${queryParams.toString()}`;
+        
+        const fetchPromise = fetch(url);
+
+        return fetchPromise.then((response) => {
+            if (response.ok)   {
+                return response.json();
+            }   else {
+                return {
+                    error: 'wystąpił błąd',
+                    status: response.status,
+                    statusText: response.statusText
+                }
+            }
+        })
+
+        const url2 = `${this.url}?postId=${postId}`;
+    }
 }
 
 const comments = new Comments();
