@@ -23,6 +23,33 @@ class Comments {
         this.url = "https://jsonplaceholder.typicode.com/comments";
     }
 
+    addComment(newComment) {
+
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(newComment)
+        }
+        const fetchPromise = fetch(this.url, options);
+
+        return fetchPromise.then((response) => {
+
+            if (response.ok) {
+
+                return response.json();
+            }
+                else {
+
+                    return {
+                        error: 'wystąpił jakiś błąd',
+                        status: response.status,
+                        statusText: response.statusText
+                    }
+                }
+
+        });
+
+    }
+
     getAllComments() {
 
     const fetchPromise = fetch(this.url, options);
